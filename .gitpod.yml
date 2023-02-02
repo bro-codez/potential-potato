@@ -3,11 +3,22 @@
 # and commit this file to your remote git repository to share the goodness with others.
 
 # Learn more from ready-to-use templates: https://www.gitpod.io/docs/introduction/getting-started/quickstart
+image:
+  file: .gitpod.Dockerfile
 
 tasks:
   - init: yarn install
     command: yarn run dev
+  - name: Start Redis Stack
+    init: |
+     docker-compose pull
+    command: |
+     alias redis-cli="docker exec -it redis-stack redis-cli" 
+     echo "Use redis-cli to interact with Redis here."
+     docker-compose up -d
+     gp sync-done finished
+    openMode: split-left
 
-image: gitpod/workspace-postgres
+
 
 
